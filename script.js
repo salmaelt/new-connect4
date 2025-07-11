@@ -51,42 +51,47 @@ for (let row = 0; row < ROWS; row++) {
     board[row][col] = null;     // Set initial state to empty
   }
 }                   
+
 boardElem.addEventListener('click', (e) => {
   const col = e.target.dataset.col;
 
-// When someone clicks a column, we try to place their disc there
-for (let row = ROWS - 1; row >= 0; row--) {
-  // Go from the bottom row upwards, looking for an empty spot
-  if (board[row][col] === null || board[row][col] === "") {
-    // Place the player's piece in the board array
-    board[row][col] = currentPlayer;
+  // When someone clicks a column, we try to place their disc there
+  for (let row = ROWS - 1; row >= 0; row--) {
+    // Go from the bottom row upwards, looking for an empty spot
+    if (board[row][col] === null || board[row][col] === "") {
+      // Place the player's piece in the board array
+      board[row][col] = currentPlayer;
 
-    const allCells = Array.from(boardEl.children);
-    const cell = allCells.find(c => c.dataset.row == row && c.dataset.col == col);
+      const allCells = Array.from(boardElem.children);
+      const cell = allCells.find(c => c.dataset.row == row && c.dataset.col == col);
 
       // Add the player's color (e.g. red or yellow) to the cell so it's visible
-    cell.classList.add(currentPlayer);
+      cell.classList.add(currentPlayer);
 
       // Check if this move made the player win
-    if (checkWin(row, col)) {
-      messageEl.textContent = currentPlayer.toUpperCase() + " wins!";
-      return;
-    }
+      if (checkWin(row, col)) {
+        messageElem.textContent = currentPlayer.toUpperCase() + " wins!";
+        return;
+      }
 
-     // Check if all cells are filled (no empty spots left) – it's a draw
-    const isDraw = board.flat().every(cell => cell !== null && cell !== "");
-    if (isDraw) {
-      messageEl.textContent = "It's a draw!";
-      return;
-    }
-    // If no one won and it's not a draw, switch to the next player
-    if (currentPlayer === "red") {
+      // Check if all cells are filled (no empty spots left) – it's a draw
+      const isDraw = board.flat().every(cell => cell !== null && cell !== "");
+      if (isDraw) {
+        messageElem.textContent = "It's a draw!";
+        return;
+      }
+
+      // If no one won and it's not a draw, switch to the next player
+      if (currentPlayer === "red") {
         currentPlayer = "yellow";
-    } else {
+      } else {
         currentPlayer = "red";
+      }
+
+      return; // End the current function (e.g., stop checking the board)
     }
-    return; // End the current function (e.g., stop checking the board)
   }
+});
 
 // Function to check if a player has 4 in a row
 function checkWin(row, col) {
@@ -97,7 +102,8 @@ function checkWin(row, col) {
     [[1, 1], [-1, -1]],  // diagonal 
     [[1, -1], [-1, 1]]   // diagonal 
   ];
-    // Check each direction for 4 in a row
+
+  // Check each direction for 4 in a row
   for (const [[x1, y1], [x2, y2]] of directions) {
     let count = 1; // Count the current piece
 
@@ -111,6 +117,22 @@ function checkWin(row, col) {
 
   return false;
 }
-  );
 
-    
+// Helper function to count matching pieces in a direction
+function countInDirection(row, col, x, y) {
+  let r = parseInt(row) + x;
+  let c = parseInt(col) + y;
+  let count = 0;
+
+  // Stay in bounds and count same-color pieces
+  while (
+    r >= 0 && r < ROWS &&
+    c >= 0 && c < COLS &&
+    board[r][c] === currentPlayer
+  ) {
+    count++;
+    r += x;
+    c += y;
+  }
+  return count;
+}
