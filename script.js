@@ -88,8 +88,29 @@ for (let row = ROWS - 1; row >= 0; row--) {
     return; // End the current function (e.g., stop checking the board)
   }
 
+// Function to check if a player has 4 in a row
+function checkWin(row, col) {
+  // 4 directions to check: horizontal, vertical and diagonal
+  const directions = [
+    [[0, 1], [0, -1]],   // left-right
+    [[1, 0], [-1, 0]],   // up-down
+    [[1, 1], [-1, -1]],  // diagonal 
+    [[1, -1], [-1, 1]]   // diagonal 
+  ];
+    // Check each direction for 4 in a row
+  for (const [[x1, y1], [x2, y2]] of directions) {
+    let count = 1; // Count the current piece
 
+    // Check both directions and add up same-color pieces
+    count += countInDirection(row, col, x1, y1);
+    count += countInDirection(row, col, x2, y2);
 
+    // If 4 or more in a row, player wins
+    if (count >= 4) return true;
+  }
+
+  return false;
+}
   );
 
     
