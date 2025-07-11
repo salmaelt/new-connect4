@@ -44,7 +44,7 @@ for (let row = 0; row < ROWS; row++) {
 
     // Create each cell in the grid
     const cell = document.createElement('div');
-    cell.classList.add('cell'); // Add styling class
+    cell.classList.add('cell'); // Add styling 
     cell.dataset.row = row;     // Store row and col in dataset
     cell.dataset.col = col;
     boardElem.appendChild(cell);  // Add cell to the board in HTML
@@ -55,7 +55,7 @@ for (let row = 0; row < ROWS; row++) {
 boardElem.addEventListener('click', (e) => {
   const col = e.target.dataset.col;
 
-  // When someone clicks a column, we try to place their disc there
+  // When someone clicks a column, a disc would be placed instead
   for (let row = ROWS - 1; row >= 0; row--) {
     // Go from the bottom row upwards, looking for an empty spot
     if (board[row][col] === null || board[row][col] === "") {
@@ -65,7 +65,7 @@ boardElem.addEventListener('click', (e) => {
       const allCells = Array.from(boardElem.children);
       const cell = allCells.find(c => c.dataset.row == row && c.dataset.col == col);
 
-      // Add the player's color (e.g. red or yellow) to the cell so it's visible
+      // Add the player's color to the cell so it's visible
       cell.classList.add(currentPlayer);
 
       // Check if this move made the player win
@@ -88,7 +88,7 @@ boardElem.addEventListener('click', (e) => {
         currentPlayer = "red";
       }
 
-      return; // End the current function (e.g., stop checking the board)
+      return; 
     }
   }
 });
@@ -118,7 +118,7 @@ function checkWin(row, col) {
   return false;
 }
 
-// Helper function to count matching pieces in a direction
+// use function to count matching pieces in the same direction
 function countInDirection(row, col, x, y) {
   let r = parseInt(row) + x;
   let c = parseInt(col) + y;
