@@ -80,12 +80,16 @@ for (let row = ROWS - 1; row >= 0; row--) {
       return;
     }
     // If no one won and it's not a draw, switch to the next player
-    currentPlayer = currentPlayer === "red" ? "yellow" : "red";
-    return; // Stop the loop once a piece is placed
+    if (currentPlayer === "red") {
+        currentPlayer = "yellow";
+    } else {
+        currentPlayer = "red";
+    }
+    return; // End the current function (e.g., stop checking the board)
   }
-}
 
 
-  });
+
+  );
 
     
