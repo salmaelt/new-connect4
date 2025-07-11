@@ -61,4 +61,31 @@ for (let row = ROWS - 1; row >= 0; row--) {
     // Place the player's piece in the board array
     board[row][col] = currentPlayer;
 
-  }}});
+    const allCells = Array.from(boardEl.children);
+    const cell = allCells.find(c => c.dataset.row == row && c.dataset.col == col);
+
+      // Add the player's color (e.g. red or yellow) to the cell so it's visible
+    cell.classList.add(currentPlayer);
+
+      // Check if this move made the player win
+    if (checkWin(row, col)) {
+      messageEl.textContent = currentPlayer.toUpperCase() + " wins!";
+      return;
+    }
+
+     // Check if all cells are filled (no empty spots left) – it's a draw
+    const isDraw = board.flat().every(cell => cell !== null && cell !== "");
+    if (isDraw) {
+      messageEl.textContent = "It's a draw!";
+      return;
+    }
+    // If no one won and it's not a draw, switch to the next player
+    currentPlayer = currentPlayer === "red" ? "yellow" : "red";
+    return; // Stop the loop once a piece is placed
+  }
+}
+
+
+  });
+
+    
