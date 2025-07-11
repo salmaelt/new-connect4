@@ -1,20 +1,28 @@
-let coloumns = 7
+// Number of rows and columns for Connect 4
+const ROWS = 6;
+const COLS = 7;
 
-function setGame() {
-    board = []
+// 2D array to represent the board's state
+const board = [];
 
-    //for loop is going to iterate through each row and coloumn 
-    for (let r = 0; r < rows; r++){
-        for (let c = 0; r < coloumns; c++){
-            rows.push(' ');
+// Track current player: 'red' or 'yellow'
+let currentPlayer = 'red';
 
-            //HTML file, will give id to each section of grid e.g. 2-2/3-6 etc
-            //will correlate to the array we made so that 5-3 will be [5][3]
-            let tile = document.createElement("div")
-            tile.id = r.toString() + "-" + c.toString();
-            tile.classList.add("tile");
-            document.getElementById("board").append(tile)
-        };
-        board.push(row);
-    };
-};
+// References to HTML elements
+const boardEl = document.getElementById('board');
+const messageEl = document.getElementById('message');
+
+// Initialize the board visually and in memory
+for (let row = 0; row < ROWS; row++) {
+  board[row] = []; // Create a new row in the array
+
+  for (let col = 0; col < COLS; col++) {
+    // Create each cell in the grid
+    const cell = document.createElement('div');
+    cell.classList.add('cell'); // Add styling class
+    cell.dataset.row = row;     // Store row and col in dataset
+    cell.dataset.col = col;
+    boardEl.appendChild(cell);  // Add cell to the board in HTML
+    board[row][col] = null;     // Set initial state to empty
+  }
+}
