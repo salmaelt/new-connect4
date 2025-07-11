@@ -51,3 +51,14 @@ for (let row = 0; row < ROWS; row++) {
     board[row][col] = null;     // Set initial state to empty
   }
 }                   
+boardElem.addEventListener('click', (e) => {
+  const col = e.target.dataset.col;
+
+// When someone clicks a column, we try to place their disc there
+for (let row = ROWS - 1; row >= 0; row--) {
+  // Go from the bottom row upwards, looking for an empty spot
+  if (board[row][col] === null || board[row][col] === "") {
+    // Place the player's piece in the board array
+    board[row][col] = currentPlayer;
+
+  }}});
